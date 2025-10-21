@@ -8,7 +8,7 @@ import javax.sound.sampled.*;
 public class Spotifyapp {
   private static Clip audioClip;
   private static String directoryPath =
-    "C:/Users/jerom/Documents/GitHub/class-java/spotify-like-app2/demo/src/main/java/com/example/";
+    "F:\\Song For Spotify App\\Song";
 
   public static void main(final String[] args) {
     Song[] library = readAudioLibrary();
