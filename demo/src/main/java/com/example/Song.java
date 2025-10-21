@@ -5,6 +5,8 @@ public class Song {
   private String name;
   private String artist;
   private String fileName;
+  private String year;
+  private String genre;
   public String toString() {
     String s;
     s = "{ ";
@@ -13,6 +15,10 @@ public class Song {
     s += "artist: " + artist;
     s += ", ";
     s += "fileName: " + fileName;
+    s += ", ";
+    s += "year: " + year;
+    s += ", ";
+    s += "genre: " + genre;
     s += " }";
 
     return s;
