@@ -57,8 +57,22 @@ public class Spotifyapp {
     }
   }
   public static void play(Song[] library) {
-    final Integer i = 3;
-    final String filename = library[i].fileName();
+  Scanner scanner = new Scanner(System.in);
+    System.out.println("Enter The Name Of Your Song:");
+    String songNameInput = scanner.nextLine().trim()+".wav";
+
+    Song selectedSong = null;
+    for (Song s : library){
+      if(s.fileName().equalsIgnoreCase(songNameInput)){
+        selectedSong = s;
+        break;
+      }
+    }
+    if (selectedSong == null) {
+      System.out.println("Song not found in the library!!");
+      return;
+    }
+    final String filename = selectedSong.fileName();
     final String filePath = directoryPath + "/wav/" + filename;
     final File file = new File(filePath);
     if (audioClip != null) {
