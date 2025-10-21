@@ -41,6 +41,7 @@ public class Spotifyapp {
         break;
       case "s":
         System.out.println("-->Search by title<--");
+        searchAndPlay(library);
         break;
       case "l":
         System.out.println("-->Library<--");
@@ -57,6 +58,73 @@ public class Spotifyapp {
         break;
     }
   }
+  public static void searchAndPlay(Song[] library) {
+    Scanner sc = new Scanner(System.in);
+    System.out.print("Find The Song: ");
+    String songName = sc.nextLine().trim();
+    if (!songName.toLowerCase().endsWith(".wav")) {
+        songName += ".wav";
+    }
+
+    Song foundSong = null;
+    for (Song s : library) {
+        if (s.fileName().equalsIgnoreCase(songName)) {
+            foundSong = s;
+            break;
+        }
+    }
+
+    if (foundSong == null) {
+        System.out.println("No Found \"" + songName + "\" In The Library!!");
+        return;
+    }
+
+    System.out.println("Found The Song: " + foundSong.fileName());
+    System.out.print("Do You Want To Play This Song? (Y/N): ");
+    String choice = sc.nextLine().trim().toLowerCase();
+
+    if (choice.equals("y")) {
+        playSelectedSong(foundSong);
+    } else {
+        System.out.println("Back To Menu...");
+    }
+}
+private static void playSelectedSong(Song selectedSong) {
+    String filename = selectedSong.fileName();
+
+    if (!filename.toLowerCase().endsWith(".wav")) {
+        filename += ".wav";
+    }
+
+    String filePath = directoryPath + "/" + filename;
+    File file = new File(filePath);
+    if (!file.exists()) {
+
+        filePath = directoryPath + "/wav/" + filename;
+        file = new File(filePath);
+    }
+
+    if (!file.exists()) {
+        System.out.println("No Found Music File: " + filePath);
+        return;
+    }
+
+    try {
+        if (audioClip != null && audioClip.isOpen()) {
+            audioClip.close();
+        }
+
+        AudioInputStream in = AudioSystem.getAudioInputStream(file);
+        audioClip = AudioSystem.getClip();
+        audioClip.open(in);
+        audioClip.setMicrosecondPosition(0);
+        audioClip.start();
+        audioClip.loop(Clip.LOOP_CONTINUOUSLY);
+        System.out.println("Playing: " + filename);
+    } catch (Exception e) {
+        System.out.println("Error When Playing: " + e.getMessage());
+    }
+}
     public static void showLibraryAndPlay(Song[] library) {
     System.out.println("-->List Of Songs<--");
 
