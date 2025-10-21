@@ -58,6 +58,7 @@ public class Spotifyapp {
         break;
     }
   }
+
   public static void searchAndPlay(Song[] library) {
     Scanner sc = new Scanner(System.in);
     System.out.print("Find The Song: ");
@@ -89,6 +90,7 @@ public class Spotifyapp {
         System.out.println("Back To Menu...");
     }
 }
+
 private static void playSelectedSong(Song selectedSong) {
     String filename = selectedSong.fileName();
 
@@ -120,11 +122,18 @@ private static void playSelectedSong(Song selectedSong) {
         audioClip.setMicrosecondPosition(0);
         audioClip.start();
         audioClip.loop(Clip.LOOP_CONTINUOUSLY);
-        System.out.println("Playing: " + filename);
+        System.out.println("Now Playing:");
+        System.out.println("Title: " + selectedSong.name());
+        System.out.println("Artist: " + selectedSong.artist());
+        System.out.println("Year: " + selectedSong.year());
+        System.out.println("Genre: " + selectedSong.genre());
+        System.out.println("--Thanks For Using Our App--");
+
     } catch (Exception e) {
         System.out.println("Error When Playing: " + e.getMessage());
     }
 }
+
     public static void showLibraryAndPlay(Song[] library) {
     System.out.println("-->List Of Songs<--");
 
