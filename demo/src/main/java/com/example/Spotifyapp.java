@@ -201,6 +201,12 @@ private static void playSelectedSong(Song selectedSong) {
       System.out.println("Song not found in the library!!");
       return;
     }
+     System.out.println("Now Playing:");
+        System.out.println("Title: " + selectedSong.name());
+        System.out.println("Artist: " + selectedSong.artist());
+        System.out.println("Year: " + selectedSong.year());
+        System.out.println("Genre: " + selectedSong.genre());
+        System.out.println("--Thanks For Using Our App--");
     final String filename = selectedSong.fileName();
     final String filePath = directoryPath + "/wav/" + filename;
     final File file = new File(filePath);
