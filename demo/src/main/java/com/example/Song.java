@@ -24,7 +24,6 @@ public class Song {
     return s;
   }
 
-  // getters
   public String name() {
     return this.name;
   }
@@ -35,5 +34,11 @@ public class Song {
 
   public String fileName() {
     return this.fileName;
+  }
+  public String year() {
+    return this.year;
+  }
+  public String genre() {
+    return this.genre;
   }
 }
