@@ -1,0 +1,33 @@
+package com.example;
+
+public class Song {
+
+  private String name;
+  private String artist;
+  private String fileName;
+  public String toString() {
+    String s;
+    s = "{ ";
+    s += "name: " + name;
+    s += ", ";
+    s += "artist: " + artist;
+    s += ", ";
+    s += "fileName: " + fileName;
+    s += " }";
+
+    return s;
+  }
+
+  // getters
+  public String name() {
+    return this.name;
+  }
+
+  public String artist() {
+    return this.artist;
+  }
+
+  public String fileName() {
+    return this.fileName;
+  }
+}
