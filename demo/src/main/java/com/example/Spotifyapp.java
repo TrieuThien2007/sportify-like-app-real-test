@@ -86,6 +86,11 @@ public class Spotifyapp {
 
     if (choice.equals("y")) {
         playSelectedSong(foundSong);
+        System.out.println("Artist: " + foundSong.artist());
+        System.out.println("Year: " + foundSong.year());
+        System.out.println("Genre: " + foundSong.genre());
+        System.out.println("--Thanks For Using Our App--");
+
     } else {
         System.out.println("Back To Menu...");
     }
