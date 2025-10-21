@@ -24,7 +24,7 @@ public class Spotifyapp {
     input.close();
   }
   public static void menu() {
-    System.out.println("---- SpotifyLikeApp ----");
+    System.out.println("---- SpotifyApp ----");
     System.out.println("[H]ome");
     System.out.println("[S]earch by title");
     System.out.println("[L]ibrary");
@@ -127,7 +127,7 @@ private static void playSelectedSong(Song selectedSong) {
         audioClip.setMicrosecondPosition(0);
         audioClip.start();
         audioClip.loop(Clip.LOOP_CONTINUOUSLY);
-        System.out.println("Now Playing:");
+        System.out.println("--Now Playing:--");
         System.out.println("Title: " + selectedSong.name());
         System.out.println("Artist: " + selectedSong.artist());
         System.out.println("Year: " + selectedSong.year());
@@ -165,7 +165,7 @@ private static void playSelectedSong(Song selectedSong) {
         return;
     }
     Song selectedSong = library[choice - 1];
-     System.out.println("Now Playing:");
+     System.out.println("--Now Playing:--");
         System.out.println("Title: " + selectedSong.name());
         System.out.println("Artist: " + selectedSong.artist());
         System.out.println("Year: " + selectedSong.year());
@@ -206,7 +206,7 @@ private static void playSelectedSong(Song selectedSong) {
       System.out.println("Song not found in the library!!");
       return;
     }
-     System.out.println("Now Playing:");
+     System.out.println("--Now Playing:--");
         System.out.println("Title: " + selectedSong.name());
         System.out.println("Artist: " + selectedSong.artist());
         System.out.println("Year: " + selectedSong.year());
