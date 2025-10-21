@@ -44,6 +44,7 @@ public class Spotifyapp {
         break;
       case "l":
         System.out.println("-->Library<--");
+        showLibraryAndPlay(library);
         break;
       case "p":
         System.out.println("-->Play<--");
@@ -56,6 +57,51 @@ public class Spotifyapp {
         break;
     }
   }
+    public static void showLibraryAndPlay(Song[] library) {
+    System.out.println("-->List Of Songs<--");
+
+    for (int i = 0; i < library.length; i++) {
+        System.out.println((i + 1) + ". " + library[i].name());
+    }
+    Scanner sc = new Scanner(System.in);
+    System.out.print("Choose The Number For The Song(or 0 To Return): ");
+    int choice = -1;
+    try {
+        choice = Integer.parseInt(sc.nextLine().trim());
+    } catch (NumberFormatException e) {
+        System.out.println("Choose A Valid Number");
+        return;
+    }
+
+    if (choice == 0) {
+        System.out.println("Back To Home.");
+        return;
+    }
+
+    if (choice < 1 || choice > library.length) {
+        System.out.println("Error No Song Found");
+        return;
+    }
+    Song selectedSong = library[choice - 1];
+    final String filename = selectedSong.fileName();
+    final String filePath = directoryPath + "/wav/" + filename;
+    final File file = new File(filePath);
+
+    if (audioClip != null) {
+        audioClip.close();
+    }
+
+    try {
+        audioClip = AudioSystem.getClip();
+        final AudioInputStream in = AudioSystem.getAudioInputStream(file);
+        audioClip.open(in);
+        audioClip.setMicrosecondPosition(0);
+        audioClip.loop(Clip.LOOP_CONTINUOUSLY);
+        System.out.println("Playing: " + selectedSong.fileName());
+    } catch (Exception e) {
+        System.out.println("Error Playing The Song");
+    }
+}
   public static void play(Song[] library) {
   Scanner scanner = new Scanner(System.in);
     System.out.println("Enter The Name Of Your Song:");
