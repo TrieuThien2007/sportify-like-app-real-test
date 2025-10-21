@@ -1,7 +1,95 @@
 package com.example;
 
-public class Main {
-    public static void main(String[] args) {
-        System.out.println("Hello world!");
+import com.google.gson.*;
+import com.google.gson.stream.JsonReader;
+import java.io.*;
+import java.util.*;
+import javax.sound.sampled.*;
+public class Spotifyapp {
+  private static Clip audioClip;
+  private static String directoryPath =
+    "C:/Users/jerom/Documents/GitHub/class-java/spotify-like-app2/demo/src/main/java/com/example/";
+
+  public static void main(final String[] args) {
+    Song[] library = readAudioLibrary();
+    Scanner input = new Scanner(System.in);
+
+    String userInput = "";
+    while (!userInput.equals("q")) {
+      menu();
+      userInput = input.nextLine();
+      userInput = userInput.toLowerCase();
+      handleMenu(userInput, library);
     }
+    input.close();
+  }
+  public static void menu() {
+    System.out.println("---- SpotifyLikeApp ----");
+    System.out.println("[H]ome");
+    System.out.println("[S]earch by title");
+    System.out.println("[L]ibrary");
+    System.out.println("[P]lay");
+    System.out.println("[Q]uit");
+
+    System.out.println("");
+    System.out.print("Enter q to Quit:");
+  }
+  public static void handleMenu(String userInput, Song[] library) {
+    switch (userInput) {
+      case "h":
+        System.out.println("-->Home<--");
+        break;
+      case "s":
+        System.out.println("-->Search by title<--");
+        break;
+      case "l":
+        System.out.println("-->Library<--");
+        break;
+      case "p":
+        System.out.println("-->Play<--");
+        play(library);
+        break;
+      case "q":
+        System.out.println("-->Quit<--");
+        break;
+      default:
+        break;
+    }
+  }
+  public static void play(Song[] library) {
+    final Integer i = 3;
+    final String filename = library[i].fileName();
+    final String filePath = directoryPath + "/wav/" + filename;
+    final File file = new File(filePath);
+    if (audioClip != null) {
+      audioClip.close();
+    }
+
+    try {
+      audioClip = AudioSystem.getClip();
+      final AudioInputStream in = AudioSystem.getAudioInputStream(file);
+
+      audioClip.open(in);
+      audioClip.setMicrosecondPosition(0);
+      audioClip.loop(Clip.LOOP_CONTINUOUSLY);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
+  public static Song[] readAudioLibrary() {
+    final String jsonFileName = "audio-library.json";
+    final String filePath = directoryPath + "/" + jsonFileName;
+
+    Song[] library = null;
+    try {
+      System.out.println("Reading the file " + filePath);
+      JsonReader reader = new JsonReader(new FileReader(filePath));
+      library = new Gson().fromJson(reader, Song[].class);
+    } catch (Exception e) {
+      System.out.printf("ERROR: unable to read the file %s\n", filePath);
+      System.out.println();
+    }
+
+    return library;
+  }
 }
