@@ -17,11 +17,10 @@ public class Spotifyapp {
     String userInput = "";
     while (!userInput.equals("q")) {
       menu();
-      userInput = input.nextLine();
-      userInput = userInput.toLowerCase();
-      handleMenu(userInput, library);
+      userInput = sc.nextLine().trim().toLowerCase();
+      handleMenu(userInput, library, sc);
     }
-    input.close();
+    sc.close();
   }
   public static void menu() {
     System.out.println("---- SpotifyApp ----");
