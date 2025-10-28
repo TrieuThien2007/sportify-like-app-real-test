@@ -20,7 +20,7 @@ public class Song {
     s += ", ";
     s += "genre: " + genre;
     s += " }";
-
+    s +=", isFavorite: " + isFavorite;
     return s;
   }
 
