@@ -205,6 +205,14 @@ private static void playSelectedSong(Song selectedSong, Scanner sc) {
         audioClip.open(in);
         audioClip.setMicrosecondPosition(0);
         audioClip.loop(Clip.LOOP_CONTINUOUSLY);
+        System.out.print("Do You Want To Add This Song To Favorites? (Y/N): ");
+        String favChoice = sc.nextLine().trim().toLowerCase();
+        if (favChoice.equals("y")) {
+        selectedSong.setFavorite(true);
+        System.out.println(" Added To Favorites!");
+        } else {
+    selectedSong.setFavorite(false);
+}
         System.out.println("Playing: " + selectedSong.fileName());
     } catch (Exception e) {
         System.out.println("Error Playing The Song");
@@ -245,6 +253,15 @@ private static void playSelectedSong(Song selectedSong, Scanner sc) {
       audioClip.open(in);
       audioClip.setMicrosecondPosition(0);
       audioClip.loop(Clip.LOOP_CONTINUOUSLY);
+        System.out.print("Do You Want To Add This Song To Favorites? (Y/N): ");
+        String favChoice = sc.nextLine().trim().toLowerCase();
+        if (favChoice.equals("y")) {
+        selectedSong.setFavorite(true);
+        System.out.println(" Added To Favorites!");
+        } else {
+    selectedSong.setFavorite(false);
+}
+
     } catch (Exception e) {
       e.printStackTrace();
     }
