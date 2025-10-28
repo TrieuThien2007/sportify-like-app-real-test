@@ -12,7 +12,7 @@ public class Spotifyapp {
 
   public static void main(final String[] args) {
     Song[] library = readAudioLibrary();
-    Scanner input = new Scanner(System.in);
+    Scanner sc = new Scanner(System.in);
 
     String userInput = "";
     while (!userInput.equals("q")) {
