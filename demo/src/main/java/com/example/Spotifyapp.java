@@ -208,12 +208,13 @@ private static void playSelectedSong(Song selectedSong, Scanner sc) {
         selectedSong.setFavorite(true);
         System.out.println(" Added To Favorites!");
         } else {
-    selectedSong.setFavorite(false);
+      selectedSong.setFavorite(false);
 }
-        System.out.println("Playing: " + selectedSong.fileName());
+        System.out.println("Playing: " + selectedSong.name());
     } catch (Exception e) {
         System.out.println("Error Playing The Song");
     }
+      System.out.println("--Thanks For Using Our App--");
 }
   public static void play(Song[] library,Scanner sc ) {
     System.out.println("Enter The Name Of Your Song:");
