@@ -75,7 +75,6 @@ public class Spotifyapp {
   }
 }
   public static void searchAndPlay(Song[] library, Scanner sc) {
-    Scanner sc = new Scanner(System.in);
     System.out.print("Find The Song: ");
     String songName = sc.nextLine().trim();
     if (!songName.toLowerCase().endsWith(".wav")) {
@@ -100,7 +99,7 @@ public class Spotifyapp {
     String choice = sc.nextLine().trim().toLowerCase();
 
     if (choice.equals("y")) {
-        playSelectedSong(foundSong);
+        playSelectedSong(foundSong, sc);
         System.out.println("Artist: " + foundSong.artist());
         System.out.println("Year: " + foundSong.year());
         System.out.println("Genre: " + foundSong.genre());
@@ -111,7 +110,7 @@ public class Spotifyapp {
     }
 }
 
-private static void playSelectedSong(Song selectedSong) {
+private static void playSelectedSong(Song selectedSong, Scanner sc) {
     String filename = selectedSong.fileName();
 
     if (!filename.toLowerCase().endsWith(".wav")) {
@@ -148,7 +147,6 @@ private static void playSelectedSong(Song selectedSong) {
         System.out.println("Year: " + selectedSong.year());
         System.out.println("Genre: " + selectedSong.genre());
         System.out.println("--Thanks For Using Our App--");
-        Scanner sc = new Scanner(System.in);
         System.out.print("Do You Want To Add This Song To Favorites? (Y/N): ");
         String favChoice = sc.nextLine().trim().toLowerCase();
         if (favChoice.equals("y")) {
@@ -162,13 +160,12 @@ private static void playSelectedSong(Song selectedSong) {
     }
 }
 
-    public static void showLibraryAndPlay(Song[] library) {
+    public static void showLibraryAndPlay(Song[] library,Scanner sc ) {
     System.out.println("-->List Of Songs<--");
 
     for (int i = 0; i < library.length; i++) {
         System.out.println((i + 1) + ". " + library[i].name());
     }
-    Scanner sc = new Scanner(System.in);
     System.out.print("Choose The Number For The Song(or 0 To Return): ");
     int choice = -1;
     try {
@@ -213,10 +210,9 @@ private static void playSelectedSong(Song selectedSong) {
         System.out.println("Error Playing The Song");
     }
 }
-  public static void play(Song[] library) {
-  Scanner scanner = new Scanner(System.in);
+  public static void play(Song[] library,Scanner sc ) {
     System.out.println("Enter The Name Of Your Song:");
-    String songNameInput = scanner.nextLine().trim()+".wav";
+    String songNameInput = sc.nextLine().trim()+".wav";
 
     Song selectedSong = null;
     for (Song s : library){
