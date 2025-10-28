@@ -103,8 +103,6 @@ public class Spotifyapp {
         System.out.println("Artist: " + foundSong.artist());
         System.out.println("Year: " + foundSong.year());
         System.out.println("Genre: " + foundSong.genre());
-        System.out.println("--Thanks For Using Our App--");
-
     } else {
         System.out.println("Back To Menu...");
     }
@@ -146,7 +144,6 @@ private static void playSelectedSong(Song selectedSong, Scanner sc) {
         System.out.println("Artist: " + selectedSong.artist());
         System.out.println("Year: " + selectedSong.year());
         System.out.println("Genre: " + selectedSong.genre());
-        System.out.println("--Thanks For Using Our App--");
         System.out.print("Do You Want To Add This Song To Favorites? (Y/N): ");
         String favChoice = sc.nextLine().trim().toLowerCase();
         if (favChoice.equals("y")) {
@@ -155,6 +152,7 @@ private static void playSelectedSong(Song selectedSong, Scanner sc) {
         } else {
         selectedSong.setFavorite(false);
         }
+        System.out.println("--Thanks For Using Our App--");
     } catch (Exception e) {
         System.out.println("Error When Playing: " + e.getMessage());
     }
@@ -190,7 +188,6 @@ private static void playSelectedSong(Song selectedSong, Scanner sc) {
         System.out.println("Artist: " + selectedSong.artist());
         System.out.println("Year: " + selectedSong.year());
         System.out.println("Genre: " + selectedSong.genre());
-        System.out.println("--Thanks For Using Our App--");
     final String filename = selectedSong.fileName();
     final String filePath = directoryPath + "/wav/" + filename;
     final File file = new File(filePath);
@@ -238,7 +235,6 @@ private static void playSelectedSong(Song selectedSong, Scanner sc) {
         System.out.println("Artist: " + selectedSong.artist());
         System.out.println("Year: " + selectedSong.year());
         System.out.println("Genre: " + selectedSong.genre());
-        System.out.println("--Thanks For Using Our App--");
     final String filename = selectedSong.fileName();
     final String filePath = directoryPath + "/wav/" + filename;
     final File file = new File(filePath);
@@ -261,7 +257,7 @@ private static void playSelectedSong(Song selectedSong, Scanner sc) {
         } else {
     selectedSong.setFavorite(false);
 }
-
+        System.out.println("--Thanks For Using Our App--");
     } catch (Exception e) {
       e.printStackTrace();
     }
