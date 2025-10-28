@@ -33,22 +33,22 @@ public class Spotifyapp {
     System.out.println("");
     System.out.print("Enter q to Quit:");
   }
-  public static void handleMenu(String userInput, Song[] library) {
+  public static void handleMenu(String userInput, Song[] library, Scanner sc) {
     switch (userInput) {
       case "h":
         System.out.println("-->Home<--");
         break;
       case "s":
         System.out.println("-->Search by title<--");
-        searchAndPlay(library);
+        searchAndPlay(library, sc );
         break;
       case "l":
         System.out.println("-->Library<--");
-        showLibraryAndPlay(library);
+        showLibraryAndPlay(library, sc );
         break;
       case "p":
         System.out.println("-->Play<--");
-        play(library);
+        play(library, sc);
         break;
         case "f":
         System.out.println("-->Favorites<--");
@@ -74,7 +74,7 @@ public class Spotifyapp {
     System.out.println("No favorite songs yet!");
   }
 }
-  public static void searchAndPlay(Song[] library) {
+  public static void searchAndPlay(Song[] library, Scanner sc) {
     Scanner sc = new Scanner(System.in);
     System.out.print("Find The Song: ");
     String songName = sc.nextLine().trim();
