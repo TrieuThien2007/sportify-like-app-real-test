@@ -62,7 +62,19 @@ public class Spotifyapp {
         break;
     }
   }
-
+      public static void showFavorites(Song[] library) {
+      System.out.println("--> Your Favorite Songs <--");
+      boolean hasFavorite = false;
+      for (Song s : library) {
+      if (s.isFavorite()) {
+      hasFavorite = true;
+      System.out.println("Your Favorite Songs: " + s.name() + " - " + s.artist());
+    }
+  }
+  if (!hasFavorite) {
+    System.out.println("No favorite songs yet!");
+  }
+}
   public static void searchAndPlay(Song[] library) {
     Scanner sc = new Scanner(System.in);
     System.out.print("Find The Song: ");
