@@ -31,7 +31,6 @@ public class Spotifyapp {
     System.out.println("[P]lay");
     System.out.println("[F]avorite");
     System.out.println("[Q]uit");
-
     System.out.println("");
     System.out.print("Enter q to Quit:");
   }
@@ -51,6 +50,10 @@ public class Spotifyapp {
       case "p":
         System.out.println("-->Play<--");
         play(library);
+        break;
+        case "f":
+        System.out.println("-->Favorites<--");
+        showFavorites(library);
         break;
       case "q":
         System.out.println("-->Quit<--");
