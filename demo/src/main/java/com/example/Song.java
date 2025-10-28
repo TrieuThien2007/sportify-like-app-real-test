@@ -41,4 +41,13 @@ public class Song {
   public String genre() {
     return this.genre;
   }
+    private boolean isFavorite;
+
+  public boolean isFavorite() {
+  return this.isFavorite;
+}
+
+  public void setFavorite(boolean favorite) {
+  this.isFavorite = favorite;
+}
 }
