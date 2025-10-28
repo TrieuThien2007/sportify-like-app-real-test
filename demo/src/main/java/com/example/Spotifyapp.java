@@ -29,6 +29,7 @@ public class Spotifyapp {
     System.out.println("[S]earch by title");
     System.out.println("[L]ibrary");
     System.out.println("[P]lay");
+    System.out.println("[F]avorite");
     System.out.println("[Q]uit");
 
     System.out.println("");
