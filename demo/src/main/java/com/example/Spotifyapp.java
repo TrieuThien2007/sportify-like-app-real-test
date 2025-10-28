@@ -149,7 +149,15 @@ private static void playSelectedSong(Song selectedSong) {
         System.out.println("Year: " + selectedSong.year());
         System.out.println("Genre: " + selectedSong.genre());
         System.out.println("--Thanks For Using Our App--");
-
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Do You Want To Add This Song To Favorites? (Y/N): ");
+        String favChoice = sc.nextLine().trim().toLowerCase();
+        if (favChoice.equals("y")) {
+        selectedSong.setFavorite(true);
+        System.out.println(" Added To Favorites!");
+        } else {
+        selectedSong.setFavorite(false);
+        }
     } catch (Exception e) {
         System.out.println("Error When Playing: " + e.getMessage());
     }
