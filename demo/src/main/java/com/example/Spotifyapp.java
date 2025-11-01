@@ -22,7 +22,7 @@ public class Spotifyapp {
     }
     sc.close();
   }
-
+//Main Menu
   public static void menu() {
     System.out.println("---- SpotifyApp ----");
     System.out.println("[H]ome");
