@@ -285,19 +285,19 @@ public class Spotifyapp {
 
     return library;
   }
+
   public static void musicControlMenu(Scanner sc) {
     String command = "";
     boolean isPaused = false;
 
     while (true) {
-      System.out.println("\n🎧 Music Controls:");
+      System.out.println(" Music Controls:");
       System.out.println("[T]for Stop or Remuse  [B]ack 5s  [N]ext 5s  [E]xit to main");
       System.out.print("Choose: ");
       command = sc.nextLine().trim().toLowerCase();
 
       switch (command) {
         case "t":
-          // Toggle Pause/Play
           if (audioClip != null) {
             if (audioClip.isRunning()) {
               audioClip.stop();
@@ -306,7 +306,7 @@ public class Spotifyapp {
             } else {
               audioClip.start();
               isPaused = false;
-              System.out.println("▶️ Music resumed.");
+              System.out.println("▶ Music resumed.");
             }
           } else {
             System.out.println("No music loaded.");
@@ -346,7 +346,7 @@ public class Spotifyapp {
       if (audioClip != null) {
         long newPosition = Math.max(0, audioClip.getMicrosecondPosition() - 5_000_000);
         audioClip.setMicrosecondPosition(newPosition);
-        System.out.println("⏪ Back 5 seconds -> " + newPosition / 1_000_000.0 + "s");
+        System.out.println(" Back 5 seconds -> " + newPosition / 1_000_000.0 + "s");
       }
     } catch (Exception e) {
       System.out.println("Error moving back: " + e.getMessage());
