@@ -326,6 +326,10 @@ public class Spotifyapp {
           forward5Seconds();
           break;
 
+        case "r":
+          resetMusic();
+          break;
+
         case "e":
           System.out.println("Returning to main menu...");
           return;
@@ -372,6 +376,7 @@ public class Spotifyapp {
       System.out.println("Error moving forward: " + e.getMessage());
     }
   }
+  //Reset Music To Beginning
   public static void resetMusic() {
     try {
       if (audioClip != null) {
