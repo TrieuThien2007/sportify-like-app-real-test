@@ -307,4 +307,17 @@ public class Spotifyapp {
       System.out.println("Error moving back: " + e.getMessage());
     }
   }
+    public static void forward5Seconds() {
+    try {
+      if (audioClip != null) {
+        long newPosition = Math.min(audioClip.getMicrosecondLength(),
+                audioClip.getMicrosecondPosition() + 5_000_000);
+        audioClip.setMicrosecondPosition(newPosition);
+        System.out.println("⏩ Forward 5 seconds -> " + newPosition / 1_000_000.0 + "s");
+      }
+    } catch (Exception e) {
+      System.out.println("Error moving forward: " + e.getMessage());
+    }
+  }
+
 }
