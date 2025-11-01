@@ -34,7 +34,7 @@ public class Spotifyapp {
     System.out.println("");
     System.out.print("Enter q to Quit:");
   }
-
+//Handle Menu Options
   public static void handleMenu(String userInput, Song[] library, Scanner sc) {
     switch (userInput) {
       case "h":
@@ -63,7 +63,7 @@ public class Spotifyapp {
         break;
     }
   }
-
+//Show Favorite Songs
   public static void showFavorites(Song[] library) {
     System.out.println("--> Your Favorite Songs <--");
     boolean hasFavorite = false;
@@ -77,7 +77,7 @@ public class Spotifyapp {
       System.out.println("No favorite songs yet!");
     }
   }
-
+//Search And Play Song
   public static void searchAndPlay(Song[] library, Scanner sc) {
     System.out.print("Find The Song: ");
     String songName = sc.nextLine().trim();
@@ -111,7 +111,7 @@ public class Spotifyapp {
       System.out.println("Back To Menu...");
     }
   }
-
+//Play Selected Song
   private static void playSelectedSong(Song selectedSong, Scanner sc) {
     String filename = selectedSong.fileName();
 
@@ -163,7 +163,7 @@ public class Spotifyapp {
        musicControlMenu(sc);
   }
   
-
+//Library Show and Play
   public static void showLibraryAndPlay(Song[] library, Scanner sc) {
     System.out.println("-->List Of Songs<--");
 
@@ -224,6 +224,7 @@ public class Spotifyapp {
     System.out.println("--Thanks For Using Our App--");
   }
 
+//Play Song By Name
   public static void play(Song[] library, Scanner sc) {
     System.out.println("Enter The Name Of Your Song:");
     String songNameInput = sc.nextLine().trim() + ".wav";
@@ -272,7 +273,7 @@ public class Spotifyapp {
       e.printStackTrace();
     }
   }
-
+  //Read Library From Json File
   public static Song[] readAudioLibrary() {
     final String jsonFileName = "audio-library.json";
     final String filePath = directoryPath + "/" + jsonFileName;
@@ -289,7 +290,7 @@ public class Spotifyapp {
 
     return library;
   }
-
+//Music Control Menu
   public static void musicControlMenu(Scanner sc) {
     String command = "";
     boolean isPaused = false;
@@ -334,6 +335,7 @@ public class Spotifyapp {
       }
     }
 }
+//Stop Music
     public static void stopMusic() {
     try {
       if (audioClip != null && audioClip.isRunning()) {
@@ -345,6 +347,7 @@ public class Spotifyapp {
       System.out.println("Error stopping music: " + e.getMessage());
     }
   }
+  //Back 5 Seconds
     public static void back5Seconds() {
     try {
       if (audioClip != null) {
@@ -356,6 +359,7 @@ public class Spotifyapp {
       System.out.println("Error moving back: " + e.getMessage());
     }
   }
+  //Forward 5 Seconds
     public static void forward5Seconds() {
     try {
       if (audioClip != null) {
