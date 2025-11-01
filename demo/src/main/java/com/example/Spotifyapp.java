@@ -290,10 +290,21 @@ public class Spotifyapp {
       if (audioClip != null && audioClip.isRunning()) {
         audioClip.stop();
         audioClip.close();
-        System.out.println("⏹ Music stopped.");
+        System.out.println(" Music stopped.");
       }
     } catch (Exception e) {
       System.out.println("Error stopping music: " + e.getMessage());
+    }
+  }
+    public static void back5Seconds() {
+    try {
+      if (audioClip != null) {
+        long newPosition = Math.max(0, audioClip.getMicrosecondPosition() - 5_000_000);
+        audioClip.setMicrosecondPosition(newPosition);
+        System.out.println("⏪ Back 5 seconds -> " + newPosition / 1_000_000.0 + "s");
+      }
+    } catch (Exception e) {
+      System.out.println("Error moving back: " + e.getMessage());
     }
   }
 }
