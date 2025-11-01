@@ -160,7 +160,9 @@ public class Spotifyapp {
     } catch (Exception e) {
       System.out.println("Error When Playing: " + e.getMessage());
     }
+       musicControlMenu(sc);
   }
+  
 
   public static void showLibraryAndPlay(Song[] library, Scanner sc) {
     System.out.println("-->List Of Songs<--");
@@ -215,6 +217,7 @@ public class Spotifyapp {
         selectedSong.setFavorite(false);
       }
       System.out.println("Playing: " + selectedSong.name());
+         musicControlMenu(sc);
     } catch (Exception e) {
       System.out.println("Error Playing The Song");
     }
@@ -264,6 +267,7 @@ public class Spotifyapp {
         selectedSong.setFavorite(false);
       }
       System.out.println("--Thanks For Using Our App--");
+         musicControlMenu(sc);
     } catch (Exception e) {
       e.printStackTrace();
     }
@@ -364,5 +368,4 @@ public class Spotifyapp {
       System.out.println("Error moving forward: " + e.getMessage());
     }
   }
-
 }
