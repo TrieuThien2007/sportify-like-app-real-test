@@ -285,4 +285,15 @@ public class Spotifyapp {
 
     return library;
   }
+    public static void stopMusic() {
+    try {
+      if (audioClip != null && audioClip.isRunning()) {
+        audioClip.stop();
+        audioClip.close();
+        System.out.println("⏹ Music stopped.");
+      }
+    } catch (Exception e) {
+      System.out.println("Error stopping music: " + e.getMessage());
+    }
+  }
 }
