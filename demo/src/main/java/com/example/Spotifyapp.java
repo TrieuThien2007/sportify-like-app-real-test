@@ -297,7 +297,7 @@ public class Spotifyapp {
 
     while (true) {
       System.out.println(" Music Controls:");
-      System.out.println("[T]for Stop or Remuse  [B]ack 5s  [N]ext 5s  [E]xit to main");
+      System.out.println("[T]for Stop or Remuse  [B]ack 5s  [N]ext 5s [R]eset  [E]xit to main" );
       System.out.print("Choose: ");
       command = sc.nextLine().trim().toLowerCase();
 
