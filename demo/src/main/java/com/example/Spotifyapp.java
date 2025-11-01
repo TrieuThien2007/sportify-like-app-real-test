@@ -285,6 +285,51 @@ public class Spotifyapp {
 
     return library;
   }
+  public static void musicControlMenu(Scanner sc) {
+    String command = "";
+    boolean isPaused = false;
+
+    while (true) {
+      System.out.println("\n🎧 Music Controls:");
+      System.out.println("[T]for Stop or Remuse  [B]ack 5s  [N]ext 5s  [E]xit to main");
+      System.out.print("Choose: ");
+      command = sc.nextLine().trim().toLowerCase();
+
+      switch (command) {
+        case "t":
+          // Toggle Pause/Play
+          if (audioClip != null) {
+            if (audioClip.isRunning()) {
+              audioClip.stop();
+              isPaused = true;
+              System.out.println("⏸ Music paused.");
+            } else {
+              audioClip.start();
+              isPaused = false;
+              System.out.println("▶️ Music resumed.");
+            }
+          } else {
+            System.out.println("No music loaded.");
+          }
+          break;
+
+        case "b":
+          back5Seconds();
+          break;
+
+        case "n":
+          forward5Seconds();
+          break;
+
+        case "e":
+          System.out.println("Returning to main menu...");
+          return;
+
+        default:
+          System.out.println("Invalid choice!");
+      }
+    }
+}
     public static void stopMusic() {
     try {
       if (audioClip != null && audioClip.isRunning()) {
