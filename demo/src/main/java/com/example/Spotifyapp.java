@@ -372,4 +372,18 @@ public class Spotifyapp {
       System.out.println("Error moving forward: " + e.getMessage());
     }
   }
+  public static void resetMusic() {
+    try {
+      if (audioClip != null) {
+      audioClip.stop();
+      audioClip.setMicrosecondPosition(0);
+      audioClip.start();
+      System.out.println("🔄 Song restarted from the beginning!");
+    } else {
+      System.out.println("No music loaded to reset.");
+    }
+  } catch (Exception e) {
+    System.out.println("Error resetting music: " + e.getMessage());
+  }
+}
 }
