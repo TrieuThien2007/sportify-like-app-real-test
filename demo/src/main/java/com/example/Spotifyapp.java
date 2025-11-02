@@ -313,11 +313,11 @@ public class Spotifyapp {
             if (audioClip.isRunning()) {
               audioClip.stop();
               isPaused = true;
-              System.out.println("⏸ Music paused.");
+              System.out.println(" Music paused.");
             } else {
               audioClip.start();
               isPaused = false;
-              System.out.println("▶ Music resumed.");
+              System.out.println(" Music resumed.");
             }
           } else {
             System.out.println("No music loaded.");
@@ -379,7 +379,7 @@ public class Spotifyapp {
         long newPosition = Math.min(audioClip.getMicrosecondLength(),
             audioClip.getMicrosecondPosition() + 5_000_000);
         audioClip.setMicrosecondPosition(newPosition);
-        System.out.println("⏩ Forward 5 seconds -> " + newPosition / 1_000_000.0 + "s");
+        System.out.println(" Forward 5 seconds -> " + newPosition / 1_000_000.0 + "s");
       }
     } catch (Exception e) {
       System.out.println("Error moving forward: " + e.getMessage());
@@ -391,9 +391,18 @@ public class Spotifyapp {
     try {
       if (audioClip != null) {
         audioClip.stop();
+        System.out.println("Music Stopped.");
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Do You Want To Restart The Song From Beginning? (Y/N): ");
+        String confirm = sc.nextLine().trim().toLowerCase();
+        if (confirm.equals("y")) {
         audioClip.setMicrosecondPosition(0);
         audioClip.start();
-        System.out.println("🔄 Song restarted from the beginning!");
+        System.out.println(" Song restarted from the beginning!");
+      } else {
+        audioClip.start();
+        System.out.println(" Song continued.");
+      }
       } else {
         System.out.println("No music loaded to reset.");
       }
