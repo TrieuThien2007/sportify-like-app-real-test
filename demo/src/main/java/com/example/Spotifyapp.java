@@ -160,7 +160,6 @@ public class Spotifyapp {
       } else {
         selectedSong.setFavorite(false);
       }
-      System.out.println("--Thanks For Using Our App--");
     } catch (Exception e) {
       System.out.println("Error When Playing: " + e.getMessage());
     }
@@ -225,7 +224,6 @@ public class Spotifyapp {
     } catch (Exception e) {
       System.out.println("Error Playing The Song");
     }
-    System.out.println("--Thanks For Using Our App--");
   }
 
   // Play Song By Name
@@ -271,7 +269,6 @@ public class Spotifyapp {
       } else {
         selectedSong.setFavorite(false);
       }
-      System.out.println("--Thanks For Using Our App--");
       musicControlMenu(sc);
     } catch (Exception e) {
       e.printStackTrace();
