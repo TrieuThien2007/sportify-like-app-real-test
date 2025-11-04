@@ -111,6 +111,11 @@ private void toggleFavorite() {
             else model.set(i, name);
         }
     }
+ private String cleanName(String s) {
+        if (s == null) return null;
+        return s.replace(" ★", "").trim();
+    }
+
 
 
 }
