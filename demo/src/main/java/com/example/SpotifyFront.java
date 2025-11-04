@@ -80,6 +80,12 @@ public class SpotifyFront extends JFrame {
         if (clip.isRunning()) { clip.stop(); status.setText("Paused"); }
         else { clip.start(); status.setText("Resumed"); }
     }
+ private void move(long delta) {
+        if (clip == null) return;
+        long pos = Math.max(0, Math.min(clip.getMicrosecondLength(), clip.getMicrosecondPosition() + delta));
+        clip.setMicrosecondPosition(pos);
+    }
+
 
 
 }
