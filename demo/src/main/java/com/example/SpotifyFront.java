@@ -38,10 +38,10 @@ public class SpotifyFront extends JFrame {
         JPanel p = new JPanel(new GridLayout(2,3,5,5));
         JButton play = new JButton("Play");
         JButton pause = new JButton("Pause");
-        JButton back = new JButton("Back");
-        JButton next = new JButton("Next");
+        JButton back = new JButton("Back 5s");
+        JButton next = new JButton("Next 5s");
         JButton reset = new JButton("Reset");
-        JButton favorite = new JButton("Favorite");
+        JButton favorite = new JButton("Favorite #");
 
         p.add(play); p.add(pause); p.add(back); p.add(next); p.add(reset); p.add(favorite);
         status = new JLabel ("Select a Song to Play",SwingConstants.CENTER);
@@ -103,13 +103,13 @@ public class SpotifyFront extends JFrame {
     private void refreshListDisplay() {
         for (int i = 0; i < model.size(); i++) {
             String name = cleanName(model.get(i));
-            if (fav.contains(name)) model.set(i, name + " ★");
+            if (fav.contains(name)) model.set(i, name + " #");
             else model.set(i, name);
         }
     }
     private String cleanName(String s) {
         if (s == null) return null;
-        return s.replace(" ★", "").trim();
+        return s.replace(" #", "").trim();
     }
    private void saveComment() {
         String s = cleanName(list.getSelectedValue());
