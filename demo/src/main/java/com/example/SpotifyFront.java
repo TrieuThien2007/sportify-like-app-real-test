@@ -85,7 +85,32 @@ public class SpotifyFront extends JFrame {
         long pos = Math.max(0, Math.min(clip.getMicrosecondLength(), clip.getMicrosecondPosition() + delta));
         clip.setMicrosecondPosition(pos);
     }
+     private void resetSong() {
+        if (clip == null) return;
+        clip.stop();
+        int opt = JOptionPane.showConfirmDialog(this, "Restart song from beginning?", "Reset", JOptionPane.YES_NO_OPTION);
+        if (opt == JOptionPane.YES_OPTION) { clip.setMicrosecondPosition(0); clip.start(); }
+        else clip.start();
+    }
 
+    private String cleanName(String s) {
+        if (s == null) return null;
+        return s.replace(" ★", "");
+    }
+private void toggleFavorite() {
+        String s = cleanName(list.getSelectedValue());
+        if (s == null) return;
+        if (fav.contains(s)) fav.remove(s);
+        else fav.add(s);
+        refreshListDisplay();
+}
+    private void refreshListDisplay() {
+        for (int i = 0; i < model.size(); i++) {
+            String name = cleanName(model.get(i));
+            if (fav.contains(name)) model.set(i, name + " ★");
+            else model.set(i, name);
+        }
+    }
 
 
 }
