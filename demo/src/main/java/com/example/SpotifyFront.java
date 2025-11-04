@@ -52,7 +52,7 @@ public class SpotifyFront extends JFrame {
         add(p, BorderLayout.SOUTH);
 
         play.addActionListener(e -> playSong());
-        pause.addActionListener(e -> pauseOrRemuse());  
+        pause.addActionListener(e -> pauseOrResume());  
         back.addActionListener (e -> move(-5_000_000));;
         next.addActionListener (e -> move(5_000_000));
         reset.addActionListener (e -> resetSong());
