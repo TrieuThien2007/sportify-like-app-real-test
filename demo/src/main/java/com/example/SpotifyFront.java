@@ -115,6 +115,19 @@ private void toggleFavorite() {
         if (s == null) return null;
         return s.replace(" ★", "").trim();
     }
+   private void saveComment() {
+        String s = cleanName(list.getSelectedValue());
+        if (s != null) comments.put(s, comment.getText());
+    }
+
+    private void loadComment() {
+        String s = cleanName(list.getSelectedValue());
+        if (s != null) comment.setText(comments.getOrDefault(s, ""));
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(SpotifyFront::new);
+    }
 
 
 
