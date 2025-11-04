@@ -1,4 +1,5 @@
 package com.example;
+
 import javax.sound.sampled.*;
 import javax.swing.*;
 import java.awt.*;
@@ -11,11 +12,12 @@ public class SpotifyFront extends JFrame {
     private DefaultListModel<String> model;
     private JTextArea comment;
     private JLabel status;
-    private Map<String,String> comments = new HashMap<>();
+    private Map<String, String> comments = new HashMap<>();
     private Set<String> fav = new HashSet<>();
     private Map<String, String[]> info = new HashMap<>();
     private JLabel infoLabel;
-    private String dir ="F://Song For Spotify App//Song//wav";
+    private String dir = "F://Song For Spotify App//Song//wav";
+
     public SpotifyFront(){
         setTitle(" Spotify App Interface");
         setSize(700,500);
@@ -61,7 +63,15 @@ public class SpotifyFront extends JFrame {
         status = new JLabel ("Select a Song to Play",SwingConstants.CENTER);
         JSplitPane split = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, listPane, commentPane);
         split.setDividerLocation (200);
-        add(status, BorderLayout.NORTH);
+        infoLabel = new JLabel(" ", SwingConstants.CENTER);
+        infoLabel.setFont(new Font("Arial", Font.ITALIC, 13));
+        infoLabel.setForeground(Color.DARK_GRAY);
+
+        JPanel northPanel = new JPanel(new GridLayout(2,1));
+        northPanel.add(status);
+        northPanel.add(infoLabel);
+        add(northPanel, BorderLayout.NORTH);
+
         add(split, BorderLayout.CENTER);
         add(p, BorderLayout.SOUTH);
 
@@ -71,15 +81,32 @@ public class SpotifyFront extends JFrame {
         next.addActionListener (e -> move(5_000_000));
         reset.addActionListener (e -> resetSong());
         favorite.addActionListener (e -> toggleFavorite());
-        list.addListSelectionListener(e -> loadComment());
+    list.addListSelectionListener(e -> {
+    loadComment();
+    showInfo();
+    });
         setVisible(true);
-    }    
+    }
+
+     private void showInfo() {
+    String s = cleanName(list.getSelectedValue());
+    if (s == null) { infoLabel.setText(" "); return; }
+    String[] i = info.get(s);
+    if (i != null)
+        infoLabel.setText("Artist " + i[0] + "   |   Genre " + i[1] + "   |   Year " + i[2]);
+    else
+        infoLabel.setText("No info available");
+}
     private void playSong() {
         String s = cleanName(list.getSelectedValue());
-        if (s == null) return;
+        if (s == null)
+            return;
         saveComment();
         try {
-            if (clip != null && clip.isOpen()) { clip.stop(); clip.close(); }
+            if (clip != null && clip.isOpen()) {
+                clip.stop();
+                clip.close();
+            }
             File f = new File(dir, s);
             clip = AudioSystem.getClip();
             clip.open(AudioSystem.getAudioInputStream(f));
@@ -90,49 +117,76 @@ public class SpotifyFront extends JFrame {
             status.setText("Error: " + ex.getMessage());
         }
     }
+
     private void pauseOrResume() {
-        if (clip == null) return;
-        if (clip.isRunning()) { clip.stop(); status.setText("Paused"); }
-        else { clip.start(); status.setText("Resumed"); }
+        if (clip == null)
+            return;
+        if (clip.isRunning()) {
+            clip.stop();
+            status.setText("Paused");
+        } else {
+            clip.start();
+            status.setText("Resumed");
+        }
     }
+
     private void move(long delta) {
-       if (clip == null) return;
+        if (clip == null)
+            return;
         long pos = Math.max(0, Math.min(clip.getMicrosecondLength(), clip.getMicrosecondPosition() + delta));
         clip.setMicrosecondPosition(pos);
     }
-     private void resetSong() {
-        if (clip == null) return;
+
+    private void resetSong() {
+        if (clip == null)
+            return;
         clip.stop();
-        int opt = JOptionPane.showConfirmDialog(this, "Restart song from beginning?", "Reset", JOptionPane.YES_NO_OPTION);
-        if (opt == JOptionPane.YES_OPTION) { clip.setMicrosecondPosition(0); clip.start(); }
-        else clip.start();
+        int opt = JOptionPane.showConfirmDialog(this, "Restart song from beginning?", "Reset",
+                JOptionPane.YES_NO_OPTION);
+        if (opt == JOptionPane.YES_OPTION) {
+            clip.setMicrosecondPosition(0);
+            clip.start();
+        } else
+            clip.start();
     }
+
     private void toggleFavorite() {
         String s = cleanName(list.getSelectedValue());
-        if (s == null) return;
-        if (fav.contains(s)) fav.remove(s);
-        else fav.add(s);
+        if (s == null)
+            return;
+        if (fav.contains(s))
+            fav.remove(s);
+        else
+            fav.add(s);
         refreshListDisplay();
-}
+    }
+
     private void refreshListDisplay() {
         for (int i = 0; i < model.size(); i++) {
             String name = cleanName(model.get(i));
-            if (fav.contains(name)) model.set(i, name + " #");
-            else model.set(i, name);
+            if (fav.contains(name))
+                model.set(i, name + " #");
+            else
+                model.set(i, name);
         }
     }
+
     private String cleanName(String s) {
-        if (s == null) return null;
+        if (s == null)
+            return null;
         return s.replace(" #", "").trim();
     }
-   private void saveComment() {
+
+    private void saveComment() {
         String s = cleanName(list.getSelectedValue());
-        if (s != null) comments.put(s, comment.getText());
+        if (s != null)
+            comments.put(s, comment.getText());
     }
 
     private void loadComment() {
         String s = cleanName(list.getSelectedValue());
-        if (s != null) comment.setText(comments.getOrDefault(s, ""));
+        if (s != null)
+            comment.setText(comments.getOrDefault(s, ""));
     }
 
     public static void main(String[] args) {
