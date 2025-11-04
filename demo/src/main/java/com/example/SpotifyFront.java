@@ -18,40 +18,40 @@ public class SpotifyFront extends JFrame {
     private JLabel infoLabel;
     private String dir = "F://Song For Spotify App//Song//wav";
 
-    public SpotifyFront(){
+    public SpotifyFront() {
         setTitle(" Spotify App Interface");
-        setSize(700,500);
+        setSize(700, 500);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
 
-        //List of the song
+        // List of the song
         model = new DefaultListModel<>();
         File folder = new File(dir);
-        File[] songs = folder.exists() ?folder.listFiles((d,n)->n.toLowerCase().endsWith(".wav")): null;
-        if (songs !=null) for (File f : songs)
-            model.addElement(f.getName());
+        File[] songs = folder.exists() ? folder.listFiles((d, n) -> n.toLowerCase().endsWith(".wav")) : null;
+        if (songs != null)
+            for (File f : songs)
+                model.addElement(f.getName());
         list = new JList<>(model);
-// Song info
-        info.put("Awesome God.wav", new String[]{"Hillsong UNITED", "Worship", "2005"});
-        info.put("Blessed Be Your Name.wav", new String[]{"Matt Redman", "Worship", "2002"});
-        info.put("Fall Never Change.wav", new String[]{"Issac Thai", "Pop", "2022"});
-        info.put("Fountain Of Joy.wav", new String[]{"Called To Worship", "Pop", "2022"});
-        info.put("Hope Of The Nations.wav", new String[]{"Brian Doerksen", "Worship", "2003"});
-        info.put("Hymm Of Heaven.wav", new String[]{"Phil Wickham", "Worship", "2021"});
-        info.put("Living Hope.wav", new String[]{"Phil Wickham", "Worship", "2018"});
-        info.put("Love Never Fall.wav", new String[]{"Bui Gai Chay", "Pop", "2021"});
-        info.put("Sing Forever.wav", new String[]{"Bui Gai Chay", "Pop-rock", "2025"});
-        info.put("Start From Me.wav", new String[]{"Called To Worship", "Rock", "2023"});
-
+        // Song info
+        info.put("Awesome God.wav", new String[] { "Hillsong UNITED", "Worship", "2005" });
+        info.put("Blessed Be Your Name.wav", new String[] { "Matt Redman", "Worship", "2002" });
+        info.put("Fall Never Change.wav", new String[] { "Issac Thai", "Pop", "2022" });
+        info.put("Fountain Of Joy.wav", new String[] { "Called To Worship", "Pop", "2022" });
+        info.put("Hope Of The Nations.wav", new String[] { "Brian Doerksen", "Worship", "2003" });
+        info.put("Hymm Of Heaven.wav", new String[] { "Phil Wickham", "Worship", "2021" });
+        info.put("Living Hope.wav", new String[] { "Phil Wickham", "Worship", "2018" });
+        info.put("Love Never Fall.wav", new String[] { "Bui Gai Chay", "Pop", "2021" });
+        info.put("Sing Forever.wav", new String[] { "Bui Gai Chay", "Pop-rock", "2025" });
+        info.put("Start From Me.wav", new String[] { "Called To Worship", "Rock", "2023" });
 
         list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         list.setFont(new Font("Arial", Font.PLAIN, 16));
         JScrollPane listPane = new JScrollPane(list);
 
-        comment = new JTextArea(5,20);
+        comment = new JTextArea(5, 20);
         JScrollPane commentPane = new JScrollPane(comment);
 
-        JPanel p = new JPanel(new GridLayout(2,3,5,5));
+        JPanel p = new JPanel(new GridLayout(2, 3, 5, 5));
         JButton play = new JButton("Play");
         JButton pause = new JButton("Pause");
         JButton back = new JButton("Back 5s");
@@ -59,15 +59,20 @@ public class SpotifyFront extends JFrame {
         JButton reset = new JButton("Reset");
         JButton favorite = new JButton("Favorite #");
 
-        p.add(play); p.add(pause); p.add(back); p.add(next); p.add(reset); p.add(favorite);
-        status = new JLabel ("Select a Song to Play",SwingConstants.CENTER);
+        p.add(play);
+        p.add(pause);
+        p.add(back);
+        p.add(next);
+        p.add(reset);
+        p.add(favorite);
+        status = new JLabel("Select a Song to Play", SwingConstants.CENTER);
         JSplitPane split = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, listPane, commentPane);
-        split.setDividerLocation (200);
+        split.setDividerLocation(200);
         infoLabel = new JLabel(" ", SwingConstants.CENTER);
         infoLabel.setFont(new Font("Arial", Font.ITALIC, 13));
         infoLabel.setForeground(Color.DARK_GRAY);
 
-        JPanel northPanel = new JPanel(new GridLayout(2,1));
+        JPanel northPanel = new JPanel(new GridLayout(2, 1));
         northPanel.add(status);
         northPanel.add(infoLabel);
         add(northPanel, BorderLayout.NORTH);
@@ -76,41 +81,46 @@ public class SpotifyFront extends JFrame {
         add(p, BorderLayout.SOUTH);
 
         play.addActionListener(e -> playSong());
-        pause.addActionListener(e -> pauseOrResume());  
-        back.addActionListener (e -> move(-5_000_000));;
-        next.addActionListener (e -> move(5_000_000));
-        reset.addActionListener (e -> resetSong());
-        favorite.addActionListener (e -> toggleFavorite());
+        pause.addActionListener(e -> pauseOrResume());
+        back.addActionListener(e -> move(-5_000_000));
+        ;
+        next.addActionListener(e -> move(5_000_000));
+        reset.addActionListener(e -> resetSong());
+        favorite.addActionListener(e -> toggleFavorite());
         list.addListSelectionListener(e -> {
-    loadComment();
-    showInfo();
-    });
-    JSlider bar = new JSlider(0,100,0);
-    JPanel top = new JPanel(new BorderLayout());
-    top.add(northPanel, BorderLayout.NORTH);
-    top.add(bar, BorderLayout.SOUTH);
-    add(top, BorderLayout.NORTH);
+            loadComment();
+            showInfo();
+        });
+        JSlider bar = new JSlider(0, 100, 0);
+        JPanel top = new JPanel(new BorderLayout());
+        top.add(northPanel, BorderLayout.NORTH);
+        top.add(bar, BorderLayout.SOUTH);
+        add(top, BorderLayout.NORTH);
 
-    new javax.swing.Timer(500, e -> {
-    if (clip!=null && clip.isRunning()) 
-    bar.setValue((int)(100.0*clip.getMicrosecondPosition()/clip.getMicrosecondLength()));
-}).start();
-    bar.addChangeListener(ev -> {
-    if (clip!=null && !clip.isRunning()) 
-    clip.setMicrosecondPosition((long)(clip.getMicrosecondLength()*bar.getValue()/100.0));
-});
-    setVisible(true);
+        new javax.swing.Timer(500, e -> {
+            if (clip != null && clip.isRunning())
+                bar.setValue((int) (100.0 * clip.getMicrosecondPosition() / clip.getMicrosecondLength()));
+        }).start();
+        bar.addChangeListener(ev -> {
+            if (clip != null && !clip.isRunning())
+                clip.setMicrosecondPosition((long) (clip.getMicrosecondLength() * bar.getValue() / 100.0));
+        });
+        setVisible(true);
     }
 
-     private void showInfo() {
-    String s = cleanName(list.getSelectedValue());
-    if (s == null) { infoLabel.setText(" "); return; }
-    String[] i = info.get(s);
-    if (i != null)
-        infoLabel.setText("Artist: " + i[0] + "   |   Genre: " + i[1] + "   |   Year:" + i[2]);
-    else
-        infoLabel.setText("No info available");
-}
+    private void showInfo() {
+        String s = cleanName(list.getSelectedValue());
+        if (s == null) {
+            infoLabel.setText(" ");
+            return;
+        }
+        String[] i = info.get(s);
+        if (i != null)
+            infoLabel.setText("Artist: " + i[0] + "   |   Genre: " + i[1] + "   |   Year:" + i[2]);
+        else
+            infoLabel.setText("No info available");
+    }
+
     private void playSong() {
         String s = cleanName(list.getSelectedValue());
         if (s == null)
