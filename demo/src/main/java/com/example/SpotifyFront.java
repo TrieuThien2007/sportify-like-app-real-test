@@ -28,7 +28,7 @@ public class SpotifyFront extends JFrame {
             model.addElement(f.getName());
         list = new JList<>(model);
         list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        list.setFront(new Font("Arial", Font.PLAIN, 16));
+        list.setFont(new Font("Arial", Font.PLAIN, 16));
         JScrollPane listPane = new JScrollPane(list);
 
         comment = new JTextArea(5,5);
@@ -41,5 +41,22 @@ public class SpotifyFront extends JFrame {
         JButton next = new JButton("Next");
         JButton reset = new JButton("Reset");
         JButton favorite = new JButton("Favorite");
+        
+        p.add(play); p.add(pause); p.add(back); p.add(next); p.add(reset); p.add(favorite);
+        status = new JLabel ("Select a Song to Play",SwingConstants.CENTER);
+        JSplitPane split = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, listPane, commentPane);
+        split.setDividerLocation(300);
+        split.setDividerLocation (200);
+        add(split, BorderLayout.CENTER);
+        add(controlPanel, BorderLayout.SOUTH);
+
+        play.addActionListener(e -> playSong());
+        pause.addActionListener(e -> pauseSong());  
+        back.addActionListener (e -> move(-5_000_000));;
+        next.addActionListener (e -> move(5_000_000));
+        reset.addActionListener (e -> resetSong());
+        favorite.addActionListener (e -> toggleFavorite());
+        list.addListSelectionListener(e -> loadComments());
+        setVisible(true);
     }    
 }
