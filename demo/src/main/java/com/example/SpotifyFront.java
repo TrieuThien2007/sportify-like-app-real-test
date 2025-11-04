@@ -41,7 +41,7 @@ public class SpotifyFront extends JFrame {
         JButton next = new JButton("Next");
         JButton reset = new JButton("Reset");
         JButton favorite = new JButton("Favorite");
-        
+
         p.add(play); p.add(pause); p.add(back); p.add(next); p.add(reset); p.add(favorite);
         status = new JLabel ("Select a Song to Play",SwingConstants.CENTER);
         JSplitPane split = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, listPane, commentPane);
@@ -59,4 +59,27 @@ public class SpotifyFront extends JFrame {
         list.addListSelectionListener(e -> loadComments());
         setVisible(true);
     }    
+    private void playSong() {
+        String s = cleanName(list.getSelectedValue());
+        if (s == null) return;
+        saveComment();
+        try {
+            if (clip != null && clip.isOpen()) { clip.stop(); clip.close(); }
+            File f = new File(dir, s);
+            clip = AudioSystem.getClip();
+            clip.open(AudioSystem.getAudioInputStream(f));
+            clip.start();
+            clip.loop(Clip.LOOP_CONTINUOUSLY);
+            status.setText("Playing: " + s);
+        } catch (Exception ex) {
+            status.setText("Error: " + ex.getMessage());
+        }
+    }
+ private void pauseOrResume() {
+        if (clip == null) return;
+        if (clip.isRunning()) { clip.stop(); status.setText("Paused"); }
+        else { clip.start(); status.setText("Resumed"); }
+    }
+
+
 }
