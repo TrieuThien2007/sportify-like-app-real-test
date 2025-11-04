@@ -81,11 +81,21 @@ public class SpotifyFront extends JFrame {
         next.addActionListener (e -> move(5_000_000));
         reset.addActionListener (e -> resetSong());
         favorite.addActionListener (e -> toggleFavorite());
-    list.addListSelectionListener(e -> {
+        list.addListSelectionListener(e -> {
     loadComment();
     showInfo();
     });
-        setVisible(true);
+    JSlider bar = new JSlider(0,100,0);
+    add(bar, BorderLayout.NORTH);
+    new javax.swing.Timer(500, e -> {
+    if (clip!=null && clip.isRunning()) 
+    bar.setValue((int)(100.0*clip.getMicrosecondPosition()/clip.getMicrosecondLength()));
+}).start();
+    bar.addChangeListener(ev -> {
+    if (clip!=null && !clip.isRunning()) 
+    clip.setMicrosecondPosition((long)(clip.getMicrosecondLength()*bar.getValue()/100.0));
+});
+    setVisible(true);
     }
 
      private void showInfo() {
@@ -93,7 +103,7 @@ public class SpotifyFront extends JFrame {
     if (s == null) { infoLabel.setText(" "); return; }
     String[] i = info.get(s);
     if (i != null)
-        infoLabel.setText("Artist " + i[0] + "   |   Genre " + i[1] + "   |   Year " + i[2]);
+        infoLabel.setText("Artist: " + i[0] + "   |   Genre: " + i[1] + "   |   Year:" + i[2]);
     else
         infoLabel.setText("No info available");
 }
