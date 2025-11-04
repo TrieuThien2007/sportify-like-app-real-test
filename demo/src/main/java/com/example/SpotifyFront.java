@@ -86,7 +86,11 @@ public class SpotifyFront extends JFrame {
     showInfo();
     });
     JSlider bar = new JSlider(0,100,0);
-    add(bar, BorderLayout.NORTH);
+    JPanel top = new JPanel(new BorderLayout());
+    top.add(northPanel, BorderLayout.NORTH);
+    top.add(bar, BorderLayout.SOUTH);
+    add(top, BorderLayout.NORTH);
+
     new javax.swing.Timer(500, e -> {
     if (clip!=null && clip.isRunning()) 
     bar.setValue((int)(100.0*clip.getMicrosecondPosition()/clip.getMicrosecondLength()));
