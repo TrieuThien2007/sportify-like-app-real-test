@@ -19,5 +19,27 @@ public class SpotifyFront extends JFrame {
         setSize(700,500);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
+
+        //List of the song
+        model = new DefaultListModel<>();
+        File folder = new File(dir);
+        File[] songs = folder.exists() ?folder.listFiles((d,n)->n.toLowerCase().endsWith(".wav")): null;
+        if (songs !=null) for (File f : songs)
+            model.addElement(f.getName());
+        list = new JList<>(model);
+        list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        list.setFront(new Font("Arial", Font.PLAIN, 16));
+        JScrollPane listPane = new JScrollPane(list);
+
+        comment = new JTextArea(5,5);
+        JScrollPane commentPane = new JScrollPane(comment);
+
+        JPanel controlPanel = new JPanel();
+        JButton playButton = new JButton("Play");
+        JButton pause = new JButton("Pause");
+        JButton back = new JButton("Back");
+        JButton next = new JButton("Next");
+        JButton reset = new JButton("Reset");
+        JButton favorite = new JButton("Favorite");
     }    
 }
