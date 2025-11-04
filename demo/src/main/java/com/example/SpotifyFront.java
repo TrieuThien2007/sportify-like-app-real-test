@@ -13,6 +13,8 @@ public class SpotifyFront extends JFrame {
     private JLabel status;
     private Map<String,String> comments = new HashMap<>();
     private Set<String> fav = new HashSet<>();
+    private Map<String, String[]> info = new HashMap<>();
+    private JLabel infoLabel;
     private String dir ="F://Song For Spotify App//Song//wav";
     public SpotifyFront(){
         setTitle(" Spotify App Interface");
@@ -27,6 +29,18 @@ public class SpotifyFront extends JFrame {
         if (songs !=null) for (File f : songs)
             model.addElement(f.getName());
         list = new JList<>(model);
+// Song info
+        info.put("Awesome God.wav", new String[]{"Hillsong UNITED", "Worship", "2005"});
+        info.put("Blessed Be Your Name.wav", new String[]{"Matt Redman", "Worship", "2002"});
+        info.put("Fall Never Change.wav", new String[]{"Issac Thai", "Pop", "2022"});
+        info.put("Fountain Of Joy.wav", new String[]{"Called To Worship", "Pop", "2022"});
+        info.put("Hope Of The Nations.wav", new String[]{"Brian Doerksen", "Worship", "2003"});
+        info.put("Hymm Of Heaven.wav", new String[]{"Phil Wickham", "Worship", "2021"});
+        info.put("Living Hope.wav", new String[]{"Phil Wickham", "Worship", "2018"});
+        info.put("Love Never Fall.wav", new String[]{"Bui Gai Chay", "Pop", "2021"});
+        info.put("Sing Forever.wav", new String[]{"Bui Gai Chay", "Pop-rock", "2025"});
+        info.put("Start From Me.wav", new String[]{"Called To Worship", "Rock", "2023"});
+
 
         list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         list.setFont(new Font("Arial", Font.PLAIN, 16));
