@@ -11,13 +11,13 @@ public class SpotifyFront extends JFrame {
     private DefaultListModel<String> model;
     private JTextArea comment;
     private JLabel status;
-    private Map<String, String>comments = new HashMap<>();
+    private Map<String,String> comments = new HashMap<>();
     private Set<String> fav = new HashSet<>();
     private String dir ="F://Song For Spotify App//Song//wav";
     public SpotifyFront(){
         setTitle(" Spotify App Interface");
         setSize(700,500);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
 
         //List of the song
@@ -27,15 +27,16 @@ public class SpotifyFront extends JFrame {
         if (songs !=null) for (File f : songs)
             model.addElement(f.getName());
         list = new JList<>(model);
+
         list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         list.setFont(new Font("Arial", Font.PLAIN, 16));
         JScrollPane listPane = new JScrollPane(list);
 
-        comment = new JTextArea(5,5);
+        comment = new JTextArea(5,20);
         JScrollPane commentPane = new JScrollPane(comment);
 
-        JPanel controlPanel = new JPanel();
-        JButton playButton = new JButton("Play");
+        JPanel p = new JPanel(new GridLayout(2,3,5,5));
+        JButton play = new JButton("Play");
         JButton pause = new JButton("Pause");
         JButton back = new JButton("Back");
         JButton next = new JButton("Next");
@@ -45,18 +46,18 @@ public class SpotifyFront extends JFrame {
         p.add(play); p.add(pause); p.add(back); p.add(next); p.add(reset); p.add(favorite);
         status = new JLabel ("Select a Song to Play",SwingConstants.CENTER);
         JSplitPane split = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, listPane, commentPane);
-        split.setDividerLocation(300);
         split.setDividerLocation (200);
+        add(status, BorderLayout.NORTH);
         add(split, BorderLayout.CENTER);
-        add(controlPanel, BorderLayout.SOUTH);
+        add(p, BorderLayout.SOUTH);
 
         play.addActionListener(e -> playSong());
-        pause.addActionListener(e -> pauseSong());  
+        pause.addActionListener(e -> pauseOrRemuse());  
         back.addActionListener (e -> move(-5_000_000));;
         next.addActionListener (e -> move(5_000_000));
         reset.addActionListener (e -> resetSong());
         favorite.addActionListener (e -> toggleFavorite());
-        list.addListSelectionListener(e -> loadComments());
+        list.addListSelectionListener(e -> loadComment());
         setVisible(true);
     }    
     private void playSong() {
@@ -75,13 +76,13 @@ public class SpotifyFront extends JFrame {
             status.setText("Error: " + ex.getMessage());
         }
     }
- private void pauseOrResume() {
+    private void pauseOrResume() {
         if (clip == null) return;
         if (clip.isRunning()) { clip.stop(); status.setText("Paused"); }
         else { clip.start(); status.setText("Resumed"); }
     }
- private void move(long delta) {
-        if (clip == null) return;
+    private void move(long delta) {
+       if (clip == null) return;
         long pos = Math.max(0, Math.min(clip.getMicrosecondLength(), clip.getMicrosecondPosition() + delta));
         clip.setMicrosecondPosition(pos);
     }
@@ -92,12 +93,7 @@ public class SpotifyFront extends JFrame {
         if (opt == JOptionPane.YES_OPTION) { clip.setMicrosecondPosition(0); clip.start(); }
         else clip.start();
     }
-
-    private String cleanName(String s) {
-        if (s == null) return null;
-        return s.replace(" ★", "");
-    }
-private void toggleFavorite() {
+    private void toggleFavorite() {
         String s = cleanName(list.getSelectedValue());
         if (s == null) return;
         if (fav.contains(s)) fav.remove(s);
@@ -111,7 +107,7 @@ private void toggleFavorite() {
             else model.set(i, name);
         }
     }
- private String cleanName(String s) {
+    private String cleanName(String s) {
         if (s == null) return null;
         return s.replace(" ★", "").trim();
     }
@@ -128,7 +124,5 @@ private void toggleFavorite() {
     public static void main(String[] args) {
         SwingUtilities.invokeLater(SpotifyFront::new);
     }
-
-
 
 }
