@@ -1,10 +1,13 @@
 package com.example;
 
+import com.google.gson.*;
+import com.google.gson.reflect.TypeToken;
 import javax.sound.sampled.*;
 import javax.swing.*;
 import java.awt.*;
 import java.io.*;
 import java.util.*;
+import java.util.List;
 
 public class SpotifyFront extends JFrame {
     private Clip clip;
@@ -23,7 +26,6 @@ public class SpotifyFront extends JFrame {
         setSize(700, 500);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
-        loadCommentsFromFile();
 
         model = new DefaultListModel<>();
         File folder = new File(dir);
@@ -109,7 +111,6 @@ public class SpotifyFront extends JFrame {
             @Override
             public void windowClosing(java.awt.event.WindowEvent e) {
                 saveComment();
-                saveCommentsToFile();
             }
         });
 
@@ -210,46 +211,68 @@ public class SpotifyFront extends JFrame {
     }
 
     private void saveComment() {
-        String s = cleanName(list.getSelectedValue());
-        if (s != null)
-            comments.put(s, comment.getText());
-    }
+        String songName = cleanName(list.getSelectedValue());
+        if (songName == null)
+            return;
 
-    private void loadComment() {
-        String s = cleanName(list.getSelectedValue());
-        if (s != null)
-            comment.setText(comments.getOrDefault(s, ""));
-    }
+        try {
+            Gson gson = new GsonBuilder().setPrettyPrinting().create();
+            File file = new File("audio-library.json");
 
-    private final String commentFile = "comments.txt";
+            if (!file.exists())
+                return;
 
-    private void saveCommentsToFile() {
-        try (PrintWriter pw = new PrintWriter(new FileWriter(commentFile))) {
-            for (Map.Entry<String, String> e : comments.entrySet()) {
+            FileReader reader = new FileReader(file);
+            java.lang.reflect.Type type = new TypeToken<List<Map<String, Object>>>() {
+            }.getType();
+            List<Map<String, Object>> songs = gson.fromJson(reader, type);
+            reader.close();
 
-                pw.println(e.getKey() + "::" + e.getValue().replace("\n", "\\n"));
+            for (Map<String, Object> s : songs) {
+                if (s.get("fileName").equals(songName)) {
+                    s.put("comment", comment.getText());
+                    break;
+                }
             }
+
+            FileWriter writer = new FileWriter(file);
+            gson.toJson(songs, writer);
+            writer.close();
+
         } catch (IOException ex) {
-            System.out.println("Error saving comments: " + ex.getMessage());
+            System.out.println("Error saving comment to JSON: " + ex.getMessage());
         }
     }
 
-    private void loadCommentsFromFile() {
-        File f = new File(commentFile);
-        if (!f.exists())
+    private void loadComment() {
+        String songName = cleanName(list.getSelectedValue());
+        if (songName == null) {
+            comment.setText("");
             return;
-        try (BufferedReader br = new BufferedReader(new FileReader(f))) {
-            String line;
-            while ((line = br.readLine()) != null) {
-                int idx = line.indexOf("::");
-                if (idx > 0) {
-                    String name = line.substring(0, idx);
-                    String text = line.substring(idx + 2).replace("\\n", "\n");
-                    comments.put(name, text);
+        }
+
+        try {
+            Gson gson = new Gson();
+            File file = new File("audio-library.json");
+            if (!file.exists())
+                return;
+
+            FileReader reader = new FileReader(file);
+            java.lang.reflect.Type type = new TypeToken<List<Map<String, Object>>>() {
+            }.getType();
+            List<Map<String, Object>> songs = gson.fromJson(reader, type);
+            reader.close();
+
+            for (Map<String, Object> s : songs) {
+                if (s.get("fileName").equals(songName)) {
+                    String cmt = (String) s.get("comment");
+                    comment.setText(cmt != null ? cmt : "");
+                    break;
                 }
             }
+
         } catch (IOException ex) {
-            System.out.println("Error loading comments: " + ex.getMessage());
+            System.out.println("Error loading comment from JSON: " + ex.getMessage());
         }
     }
 
