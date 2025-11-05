@@ -23,8 +23,8 @@ public class SpotifyFront extends JFrame {
         setSize(700, 500);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
+        loadCommentsFromFile();
 
-        // List of the song
         model = new DefaultListModel<>();
         File folder = new File(dir);
         File[] songs = folder.exists() ? folder.listFiles((d, n) -> n.toLowerCase().endsWith(".wav")) : null;
@@ -32,7 +32,7 @@ public class SpotifyFront extends JFrame {
             for (File f : songs)
                 model.addElement(f.getName());
         list = new JList<>(model);
-        // Song info
+
         info.put("Awesome God.wav", new String[] { "Hillsong UNITED", "Worship", "2005" });
         info.put("Blessed Be Your Name.wav", new String[] { "Matt Redman", "Worship", "2002" });
         info.put("Fall Never Change.wav", new String[] { "Issac Thai", "Pop", "2022" });
@@ -105,6 +105,13 @@ public class SpotifyFront extends JFrame {
             if (clip != null && !clip.isRunning())
                 clip.setMicrosecondPosition((long) (clip.getMicrosecondLength() * bar.getValue() / 100.0));
         });
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent e) {
+                saveCommentsToFile();
+            }
+        });
+
         setVisible(true);
     }
 
@@ -211,6 +218,38 @@ public class SpotifyFront extends JFrame {
         String s = cleanName(list.getSelectedValue());
         if (s != null)
             comment.setText(comments.getOrDefault(s, ""));
+    }
+
+    private final String commentFile = "comments.txt";
+
+    private void saveCommentsToFile() {
+        try (PrintWriter pw = new PrintWriter(new FileWriter(commentFile))) {
+            for (Map.Entry<String, String> e : comments.entrySet()) {
+
+                pw.println(e.getKey() + "::" + e.getValue().replace("\n", "\\n"));
+            }
+        } catch (IOException ex) {
+            System.out.println("Error saving comments: " + ex.getMessage());
+        }
+    }
+
+    private void loadCommentsFromFile() {
+        File f = new File(commentFile);
+        if (!f.exists())
+            return;
+        try (BufferedReader br = new BufferedReader(new FileReader(f))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                int idx = line.indexOf("::");
+                if (idx > 0) {
+                    String name = line.substring(0, idx);
+                    String text = line.substring(idx + 2).replace("\\n", "\n");
+                    comments.put(name, text);
+                }
+            }
+        } catch (IOException ex) {
+            System.out.println("Error loading comments: " + ex.getMessage());
+        }
     }
 
     public static void main(String[] args) {
